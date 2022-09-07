@@ -2,23 +2,23 @@
 
 {% block body %}
 
-<main class="p-3">
+<main  class="container-sm text-center">
     <div>
         {% if message %}
         {{message}}
         {% endif %}
     </div>
-    <form action="/home" method="post">
-        <div class="mb-3">
-            <label for="user" class="form-label">Name</label>
-            <input type="text" name="user" autofocus autocomplete="false" placeholder="Enter your name" id="user" class="form-control" required readonly onfocus="this.removeAttribute('readonly');">
-        </div>
-        <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control bg-red" id="password" required>
-        </div>
-            <input type="submit" value="sign in" class="btn btn-primary">
-    </form>
+        <form action="/home" method="post">
+            <div class="mb-3">
+                <label for="user" class="form-label">Jams</label>
+                <input type="text" name="user" placeholder="Enter your name" id="user" autofocus autocomplete="false" required readonly onfocus="this.removeAttribute('readonly');" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" required>
+            </div>
+                <input type="submit" value="sign in" class="btn btn-primary">
+        </form>
     <div>
         <a href="/create_account">Don't have an account? Create one!</a>
     </div>

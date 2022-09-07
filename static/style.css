@@ -1,0 +1,35 @@
+header {
+    background-color: #202027; 
+    height: auto;
+}
+
+footer {
+    background-color: #202027;
+    height: auto;
+    align-items: center;
+}
+
+body {
+    background-color: lightslategray;
+}
+
+.banner {
+    background-image: url(/static/background.jpg);
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: cover;
+    border-bottom: #2F4F4F;
+}
+
+.wrapper{
+    display: inline-block
+}
+
+.error {
+    color: #FF0000;
+    font-size: large
+}
+
+.card-color {
+    background-color: #8899AA;
+}

@@ -5,40 +5,25 @@
         <h1> Welcome, {{user}} </h1>
         <p> Scroll to see your tasks </p>
     </div>
-    <main class="text-white-50 p-5">
-        <div>
-            {% for x in range(10) %}
-            {{x}}: lorem ipsum <br> <hr>
-            {% endfor %}
-        </div>
+    <main class="container text-white-50 p-5">
         <div class="row">
-            <div class="col col-md-4">
-                <div class="card mb-4 shadow-sm">
-
-                    <a href="/">
-                    <img class="card-img-top" src="/media/reports.png">
-                    </a>
-
-                    <div class="card-body">
-                        <h5 class="card-title">I promise this doesn't log u out</h5>
-                        <p class="card-text">
-
-                            You can view your school reports here.
-
-                        </p>
-
-                    </div>
-
-                    <div class="card-footer">
-                        <div class="btn-group">
-
-                        <a type="button " class="btn btn-sm btn btn-abingdon" href="/">I promise this doesn't log u out</a>
-
+            {% for subject in subject_list %}
+                <div class="col-3 mb-4">
+                    <div class="card text-dark card-color mb-4" style="width: 18rem; height:100%">
+                        <img class="card-img-top" src="/static/subject_images/{{subject}}.svg" alt="{{subject}}" style="height: 80%; width: 80%; align-self: center;">
+                        <div class="card-body">
+                            <h5 class="card-title">{{subject}}</h5>
+                            <p class="card-text">Some really fun {{subject}} homework to be doing yayyyy</p>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#{{subject}}">View description</button>
+                            <div id="{{subject}}" class="collapse">
+                                {% for x in range(100) %}
+                                {{subject}}
+                                {% endfor %}
+                            </div>  
                         </div>
                     </div>
-
                 </div>
-            </div>
-        </div>
+            {% endfor %}
+        </div>  
     </main>
 {% endblock %}
