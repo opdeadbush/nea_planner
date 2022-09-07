@@ -15,7 +15,7 @@ def home():
     user = request.form.get("user")
     if not user:
         return redirect("/sign_in")
-    return render_template("home.html", user=user, subject_list=["maths", "art", "computing", "biology", "english", "history", "physics"])
+    return render_template("home.html", user=user, subject_list=["maths", "art", "computing", "biology", "english", "history", "physics", "psychology"])
 
 FIELDS={"username":"Username", "first_name":"First name", "last_name": "Last name", "email": "Email", "password": "Password"}
 
