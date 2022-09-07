@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+<main class="p-3">
+    <form action="/check_account" method="post">
+        {% for key, value in fields.items() %}
+        {% if key == "password" or key == "email" %}
+        <div class="mb-3">
+            <label for={{key}} class="form-label">{{key}}</label>
+            <input type={{value}} class="form-control bg-red" id={{key}} name={{key}} required>
+        </div>
+        {% else %}
+        <div class="mb-3">
+            <label for={{key}} class="form-label">{{value}}</label>
+            <input type=text class="form-control bg-red" id={{key}} name={{key}} placeholder="{{value}}" required>
+        </div>
+        {%endif%}
+        {% endfor %}
+        <input type="submit" value="sign in" class="btn btn-primary">
+    </form>
+</main>
+
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    <div class="banner container-fluid p-5 bg-secondary text-white-50 text-center text-bottom">
+        <h1> Welcome, {{user}} </h1>
+        <p> Scroll to see your tasks </p>
+    </div>
+    <main class="text-white-50 p-5">
+        <div>
+            {% for x in range(10) %}
+            {{x}}: lorem ipsum <br> <hr>
+            {% endfor %}
+        </div>
+        <div class="row">
+            <div class="col col-md-4">
+                <div class="card mb-4 shadow-sm">
+
+                    <a href="/">
+                    <img class="card-img-top" src="/media/reports.png">
+                    </a>
+
+                    <div class="card-body">
+                        <h5 class="card-title">I promise this doesn't log u out</h5>
+                        <p class="card-text">
+
+                            You can view your school reports here.
+
+                        </p>
+
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="btn-group">
+
+                        <a type="button " class="btn btn-sm btn btn-abingdon" href="/">I promise this doesn't log u out</a>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
