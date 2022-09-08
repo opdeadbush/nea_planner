@@ -1,28 +1,37 @@
-{% extends "layout.html" %}
+{% extends "account_layout.html" %}
 
 {% block body %}
 
-<main  class="container-sm text-center">
-    {% if message %}
-    <div class="container mb-3 alert alert-danger" role="alert">
-        <strong>ERROR:</strong> {{message}}!
-    </div>
-    {% endif %}
-        <form action="/sign_in" method="post">
-            <div class="mb-3">
-                <label for="username" class="form-label">Enter your name</label>
-                <input type="text" name="username" placeholder="Enter your name" id="username" autofocus autocomplete="false" required readonly onfocus="this.removeAttribute('readonly');" class="form-control">
+{% if message %}
+<div class="container mb-3 alert alert-danger" role="alert">
+    <strong>ERROR:</strong> {{message}}!
+</div>
+{% endif %}
+<div class="container-fluid login">
+    <h1 class="text-center">Sign In!</h1>
+
+    <form action="/sign_in" method="post" class="needs-validation">
+
+        <div class="form-group was-validated">
+            <label for="username" class="form-label">Enter your name</label>
+            <input type="text" name="username" placeholder="Enter your name" class="form-control" id="username" autofocus autocomplete="off" required readonly onfocus="this.removeAttribute('readonly')">
+            <div class="invalid-feedback">
+                Please enter username
             </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+
+        <div class="form-group was-validated">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" class="form-control" required>
+            <div class="invalid-feedback">
+                please enter password
             </div>
-                <input type="submit" value="sign in" class="btn btn-primary">
-        </form>
-    <div>
-        <a href="/create_account">Don't have an account? Create one!</a>
-    </div>
-    {{ test }}
-</main>
+        </div>
+
+        <input type="submit" value="SIGN IN" class="btn btn-primary">
+
+    </form>
+</div>
+{{ test }}
 
 {% endblock %}

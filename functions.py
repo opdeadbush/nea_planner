@@ -17,10 +17,10 @@ def get_user_details(username):
 def insert(field, attribute):
     connection = sqlite3.connect("./nea_database.db")
     query="""
-    INSERT INTO user_info (?)
+    INSERT INTO user_info (%s)
     VALUES (?) 
     """
-    value = connection.execute(query, (field, attribute, ))
+    value = connection.execute(query % (field), (attribute,))
     connection.commit()
     connection.close()
 
@@ -29,4 +29,4 @@ def hash(string):
     return(x.hexdigest())
 
 if __name__ == "__main__":
-    insert("username", "test")
+    print(get_user_details("harvz"))
