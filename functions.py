@@ -1,7 +1,32 @@
-def validate_account_request(pwrd1, pwrd2):
-    if pwrd1 == pwrd2:
-        return ""
-    return "Password not correct"
+import hashlib
+import sqlite3
+from webbrowser import get
 
-def greet():
-    return "Hello"
+def get_user_details(username):
+    username=username.upper()
+    connection = sqlite3.connect("./nea_database.db")
+    value = connection.execute("SELECT first_name, password_hash FROM user_info WHERE username = ?", (username,)).fetchall()
+    if value:    
+        details = value[0]
+    else:
+        details = ('','')
+    connection.commit()
+    connection.close()
+    return details
+
+def insert(field, attribute):
+    connection = sqlite3.connect("./nea_database.db")
+    query="""
+    INSERT INTO user_info (?)
+    VALUES (?) 
+    """
+    value = connection.execute(query, (field, attribute, ))
+    connection.commit()
+    connection.close()
+
+def hash(string):
+    x = hashlib.sha256(str.encode(string))
+    return(x.hexdigest())
+
+if __name__ == "__main__":
+    insert("username", "test")

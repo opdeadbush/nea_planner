@@ -3,19 +3,19 @@
 {% block body %}
 
 <main  class="container-sm text-center">
-    <div>
-        {% if message %}
-        {{message}}
-        {% endif %}
+    {% if message %}
+    <div class="container mb-3 alert alert-danger" role="alert">
+        <strong>ERROR:</strong> {{message}}!
     </div>
-        <form action="/home" method="post">
+    {% endif %}
+        <form action="/sign_in" method="post">
             <div class="mb-3">
-                <label for="user" class="form-label">Jams</label>
-                <input type="text" name="user" placeholder="Enter your name" id="user" autofocus autocomplete="false" required readonly onfocus="this.removeAttribute('readonly');" class="form-control">
+                <label for="username" class="form-label">Enter your name</label>
+                <input type="text" name="username" placeholder="Enter your name" id="username" autofocus autocomplete="false" required readonly onfocus="this.removeAttribute('readonly');" class="form-control">
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" required>
+                <input type="password" class="form-control" id="password" name="password" required>
             </div>
                 <input type="submit" value="sign in" class="btn btn-primary">
         </form>

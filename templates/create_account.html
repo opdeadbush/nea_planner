@@ -3,7 +3,7 @@
 {% block body %}
 
 <main class="p-3">
-    <form action="/check_account" method="post">
+    <form action="/create_account" method="post">
         {% for key, value in fields.items() %}
         {% if key == "password" or key == "email" %}
         <div class="mb-3">
