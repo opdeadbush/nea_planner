@@ -21,6 +21,7 @@ def login():
     if request.method == "POST":
         username = request.form.get("username")
         name, password = functions.get_user_details(username)
+        print(name, password, username)
         if name and password == functions.hash(request.form.get("password")):
             session["name"] = name
             return redirect("/")

@@ -14,6 +14,32 @@ body {
     font-family: Helvetica, Sans-Serif;
 }
 
+.login-page {
+    height: 100vh;
+    align-items: center;
+}
+
+.login {
+    width: 360px;
+    height: min-content;
+    padding: 20px;
+    border-radius: 12px;
+    background: #99AABB;
+}
+
+.login h1 {
+    font-size: 36px;
+    margin-bottom: 25px;
+}
+
+.login form {
+    font-size: 20px;
+}
+
+.login form .form-group {
+    margin-bottom: 12px;
+}
+
 .banner {
     background-image: url(/static/background.jpg);
     background-repeat: no-repeat;
