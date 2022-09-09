@@ -31,13 +31,15 @@ def login():
 
 @app.route("/create_account", methods=["POST", "GET"])
 def create_account():
-    FIELDS={"username":"Username", "first_name":"First name", "last_name": "Last name", "email": "Email", "password": "Password"}
     if request.method == "POST":
-        attributes = []
-        for field in FIELDS:
-            attributes.append(request.form.get(field))
-        database.insert(tuple(attributes))
-    return render_template("create_account.html", fields=FIELDS)
+        if database.check_for_password(request.form.get("email")):
+            return render_template("create_account.html", message="Error - Account already exists!")
+        elif request.form.get("password") != request.form.get("password_check"):
+            return render_template("create_account.html", message="Error - Passwords do not match!")
+        else:
+            database.insert((request.form.get("username").upper(), request.form.get("first_name"), request.form.get("last_name"), request.form.get("email"), database.hash(request.form.get("password"))))
+            return redirect("/")
+    return render_template("create_account.html")
 
 @app.route("/logout")
 def logout():
