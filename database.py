@@ -1,5 +1,6 @@
 import hashlib
 import sqlite3
+from tabnanny import check
 from webbrowser import get
 
 def get_user_details(username):
@@ -14,13 +15,27 @@ def get_user_details(username):
     connection.close()
     return details
 
-def insert(field, attribute):
+def check_for_password(password_hash):
     connection = sqlite3.connect("./nea_database.db")
     query="""
-    INSERT INTO user_info (%s)
-    VALUES (?) 
+    SELECT password_hash FROM user_info WHERE password_hash = ?
     """
-    value = connection.execute(query % (field), (attribute,))
+    cursor = connection.execute(query, (password_hash,)).fetchall()
+    if cursor:
+        print(cursor[0])
+    else:
+        print(cursor)
+    connection.commit()
+    connection.close()
+    return
+
+def insert(attribute):
+    connection = sqlite3.connect("./nea_database.db")
+    query="""
+    INSERT INTO user_info
+    VALUES (?, ?, ?, ?, ?)
+    """
+    value = connection.execute(query, attribute)
     connection.commit()
     connection.close()
 
@@ -29,4 +44,4 @@ def hash(string):
     return(x.hexdigest())
 
 if __name__ == "__main__":
-    print(get_user_details("harvz"))
+    check_for_password(hash("asd"))

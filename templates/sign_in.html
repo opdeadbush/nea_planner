@@ -12,9 +12,9 @@
 
     <form action="/sign_in" method="post" class="needs-validation">
 
-        <div class="form-group was-validated">
+        <div class="form-group was-validated" onfocus="this.removeAttribute('was-validated')";>
             <label for="username" class="form-label">Enter your name</label>
-            <input type="text" name="username" placeholder="Enter your name" class="form-control" id="username" autofocus autocomplete="off" required readonly onfocus="this.removeAttribute('readonly')">
+            <input type="text" name="username" placeholder="Enter your name" class="form-control" id="username" autofocus autocomplete="off" required readonly onfocus="this.removeAttribute('readonly')";>
             <div class="invalid-feedback">
                 Please enter username
             </div>

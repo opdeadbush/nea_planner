@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, session
 from flask_session import Session
 import sqlite3
-import functions
+import database
 
 app = Flask(__name__)
 
@@ -26,7 +26,7 @@ def sign_in():
 def home():
     if request.method == "POST":
         username = request.form.get("username")
-        user = functions.get_name(username)
+        user = database.get_name(username)
         if user:
             return render_template("home.html", user=user, subject_list=["psychology", "maths", "english", "chemistry", "computing"])
     return redirect("/sign_in")
@@ -45,7 +45,7 @@ def check_account():
         last_name = request.form.get("last_name")
         email = request.form.get("email")
         password = request.form.get("password")
-        hash = functions.hash(password)
+        hash = database.hash(password)
         connection = sqlite3.connect("nea_database.db")
         return render_template("sign_in.html", message=hash) 
     return render_template("sign_in.html")
