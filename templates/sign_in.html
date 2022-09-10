@@ -1,17 +1,17 @@
 {% extends "account_layout.html" %}
 
 {% block body %}
-
-{% if message %}
-<div class="container mb-3 alert alert-danger" role="alert">
-    <strong>ERROR:</strong> {{message}}!
-</div>
-{% endif %}
 <div class="container-fluid login">
-    <h1 class="text-center">Sign In!</h1>
-
+    <h1 class="text-center">Sign In</h1>
+    <hr>
+    {% if message %}
+    <div class="error">ERROR: {{message}}!</div>
+    {% endif %}
     <form action="/sign_in" method="post" class="needs-validation">
+<<<<<<< HEAD
+=======
         <hr>
+>>>>>>> da49cd8d573d777f199c09ef3fa2da796334a457
         <div>
             <input type="text" name="username" id="username" autofocus autocomplete="off" required readonly onfocus="this.removeAttribute('readonly')";>
             <span></span>

@@ -14,11 +14,13 @@ body {
     font-family: 'Courier New', Courier, monospace
 }
 
+nav {
+    margin-bottom: 10px;
+    padding: 100px;
+}
+
 .login-page {
-    height: 100vh;
-    align-items: center;
-    flex:content;
-    justify-content: center;
+    height: 80%;
 }
 
 .login {
@@ -39,10 +41,17 @@ body {
     color: #FFFFFF;
 }
 
-.login strong{
-    color: red;
-    background-color:darkred;
+.login .error{
+    color:red;
     text-align: center;
+    border-bottom:none;
+    margin: 0px;
+}
+
+.login hr {
+    background-color:#FFFFFF;
+    height: 2px;
+    border: 0px;
 }
 
 .login a {
@@ -98,15 +107,6 @@ body {
     width: 100%;
 }
 
-.pass{
-    margin: -5px 0 20px 5px;
-    color: #a6a6a6;
-    cursor: pointer;
-  }
-  .pass:hover{
-    text-decoration: underline;
-  }
-
 .login input[type="submit"] {
     width: 100%;
     border-radius: 25px;
@@ -131,11 +131,6 @@ body {
 
 .wrapper{
     display: inline-block
-}
-
-.error {
-    color: #FF0000;
-    font-size: large
 }
 
 .card-color {
