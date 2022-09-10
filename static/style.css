@@ -1,22 +1,6 @@
-header {
-    background-color: #202027; 
-    height: auto;
-}
-
-footer {
-    background-color: #202027;
-    height: auto;
-    align-items: center;
-}
-
 body {
     background-color: lightslategray;
     font-family: 'Courier New', Courier, monospace
-}
-
-nav {
-    margin-bottom: 10px;
-    padding: 100px;
 }
 
 .login-page {
@@ -121,16 +105,54 @@ nav {
     text-align: center;
 }
 
+nav {
+    background-color: black;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+nav ul li {
+    float: left;
+}
+
+nav ul li a {
+    display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+nav ul li a:hover:not(.active) {
+    background-color: #111;
+    opacity: 0.5;
+}
+
+nav ul li a.active {
+    background-color: royalblue;
+}
+
+nav ul li.right {
+    float:right;
+}
+
+@media screen and (max-width: 600px) {
+    nav ul li.right, 
+    nav ul li {float: none;}
+  }
+
 .banner {
     background-image: url(/static/background.jpg);
     background-repeat: no-repeat;
     background-position: center top;
     background-size: cover;
     border-bottom: #2F4F4F;
-}
-
-.wrapper{
-    display: inline-block
 }
 
 .card-color {

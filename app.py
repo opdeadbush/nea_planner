@@ -41,6 +41,35 @@ def create_account():
             return redirect("/")
     return render_template("create_account.html")
 
+@app.route("/tasks")
+def tasks():
+    if not session.get("name"):
+        return redirect("/sign_in")
+    if request.method == "GET":
+        return render_template("tasks.html")
+    
+
+@app.route("/revision")
+def revision():
+    if not session.get("name"):
+        return redirect("/sign_in")
+    if request.method == "GET":
+        return render_template("revision.html")
+
+@app.route("/timetable")
+def timetable():
+    if not session.get("name"):
+        return redirect("/sign_in")
+    if request.method == "GET":
+        return render_template("timetable.html")
+
+@app.route("/account")
+def account():
+    if not session.get("name"):
+        return redirect("/sign_in")
+    if request.method == "GET":
+        return render_template("account.html")
+
 @app.route("/logout")
 def logout():
     session["name"] = None
