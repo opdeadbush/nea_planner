@@ -12,7 +12,7 @@ def index():
     if not session.get("name"):
         return redirect("/sign_in")
     name = session.get("name")
-    return render_template("home.html", user=name, subject_list=["maths", "physics"])
+    return render_template("home.html", user=name, subject_list=["maths", "physics", "art", "biology", "chemistry", "computing", "english", "geography", "history", "psychology"])
 
 @app.route("/sign_in", methods=["GET", "POST"])
 def login():

@@ -1,9 +1,9 @@
 html {
-    min-height: 100%;
+    min-height:100%;
+    background-color: #8899AA;
 }
 
 body {
-    background-color: lightslategray;
     background:linear-gradient(150deg, #445566, #AABBCC);
     background-repeat: no-repeat;
     background-position:bottom;
