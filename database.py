@@ -43,5 +43,9 @@ def hash(string):
     x = hashlib.sha256(str.encode(string))
     return(x.hexdigest())
 
+def f(x):
+    return (x)
+
 if __name__ == "__main__":
-    check_for_password(hash("asd"))
+    for x in range(10000000):
+        y = f(x)
