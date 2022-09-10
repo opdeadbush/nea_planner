@@ -1,6 +1,42 @@
+html {
+    min-height: 100%;
+}
+
 body {
     background-color: lightslategray;
-    font-family: 'Courier New', Courier, monospace
+    background:linear-gradient(150deg, #445566, #AABBCC);
+    background-repeat: no-repeat;
+    background-position:bottom;
+    background-size: cover;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+a:not(nav ul li a) {
+    color: white;
+}
+
+a:hover:not(nav ul li a) {
+    color: #2F4F4F;
+}
+
+.banner {
+    background-image: url(/static/background.jpg);
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: cover;
+    border-bottom: 2px solid #333;
+    text-align: center;
+    height: 200px;
+    padding: 3%;
+    color: white;
+}
+
+.banner h1 {
+    font-size:50px; 
+}
+
+.card-color {
+    background-color: #8899AA;
 }
 
 .login-page {
@@ -38,10 +74,6 @@ body {
     border: 0px;
 }
 
-.login a {
-    text-decoration-line: none;
-}
-
 .login div {
     position: relative;
     border-bottom: 2px solid #FFFFFF;
@@ -76,14 +108,14 @@ body {
     left: 0;
     width: 0%;
     height: 2px;
-    background: royalblue;
+    background: #2F4F4F;
     transition: .5s;
   }
 
 .login div input:focus ~ label,
 .login div input:valid ~ label{
     top: -5px;
-    color: royalblue;
+    color: #2F4F4F;
 }
 
 .login div input:focus ~ span::before,
@@ -95,7 +127,7 @@ body {
     width: 100%;
     border-radius: 25px;
     margin-bottom: 20px;
-    background-color:royalblue;
+    background-color:#2F4F4F;
 }
 
 .login .no-underline {
@@ -123,38 +155,74 @@ nav ul li {
 
 nav ul li a {
     display: block;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
 }
 
-nav ul li a:hover:not(.active) {
+nav ul li a:hover {
     background-color: #111;
+    color:#AABBCC;
     opacity: 0.5;
 }
 
 nav ul li a.active {
-    background-color: royalblue;
+    background-color: #2F4F4F;
 }
 
 nav ul li.right {
     float:right;
 }
 
+nav .dropdown{
+    display: none;
+}
+
 @media screen and (max-width: 600px) {
-    nav ul li.right, 
-    nav ul li {float: none;}
-  }
+    nav:not(.dropdown) {display: none;}
+    nav ul li:not(.dropdown) {float:none;}
 
-.banner {
-    background-image: url(/static/background.jpg);
-    background-repeat: no-repeat;
-    background-position: center top;
-    background-size: cover;
-    border-bottom: #2F4F4F;
+    nav .dropdown{
+        text-align: center;
+        display: flex;
+        float: none;
+    }
+
+    nav .dropdown hr {
+        color: #FFFFFF
+    }
+
+    .nav-sub {
+        background-color: #2F4F4F;
+        width: 100%;
+    }
+
+    nav button {
+        background-color: #2F4F4F;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        width: 100%;
+      
+    }
+
+    nav .show {
+        display: none;
+    }
+
 }
 
-.card-color {
-    background-color: #8899AA;
+.page-body {
+    text-align: center;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 20px;
+    max-width: 70%;
+    padding: 20px;
 }
+

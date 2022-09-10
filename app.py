@@ -1,8 +1,9 @@
 from flask import Flask, redirect, render_template, request, session
 from flask_session import Session
 import database
-
+from flask_cors import CORS
 app = Flask(__name__)
+CORS(app)
 
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
@@ -68,7 +69,7 @@ def account():
     if not session.get("name"):
         return redirect("/sign_in")
     if request.method == "GET":
-        return render_template("account.html")
+        return render_template("account.html", name=session.get("name"))
 
 @app.route("/logout")
 def logout():

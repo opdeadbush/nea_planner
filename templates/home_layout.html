@@ -6,20 +6,48 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
         <link rel="stylesheet" href="/static/style.css" >
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+            function myFunction() {
+  document.getElementById("dropdown").classList.toggle("show");
+}
+        </script>
         <title>Home</title>
     </head>
     <body>
-        <nav class="navbar-collapse">
+
+        <nav>
             <ul>
-              <li></li>
-              <li><a class="active" href="/">Home</a></li>
-              <li><a href="/tasks">Tasks</a></li>
-              <li><a href="/revision">Revision</a></li>
-              <li><a href="/timetable">Timetable</a></li>
-              <li class="right"><a class="active" href="/account">Account</a></li>
-              <li class="right"><a href="/logout">Sign Out</a></li>
+                <li><a class="active" href="/">Home</a></li>
+                <li><a href="/tasks">Tasks</a></li>
+                <li><a href="/revision">Revision</a></li>
+                <li><a href="/timetable">Timetable</a></li>
+                <li class="right"><a class="active" href="/account">Account</a></li>
+                <li class="right"><a href="/logout">Sign Out</a></li>
             </ul>
         </nav>
-        {% block body %}{% endblock %}
+        
+        <nav class="dropdown">
+            <ul class="dropdown">
+                <li class="nav-sub">
+                    <button onclick="myFunction()">Menu</button>
+                    <div class="show" id="dropdown">
+                        <ul>
+                            <li><a href="/">Home</a></li>
+                            <li><a href="/tasks">Tasks</a></li>
+                            <li><a href="/revision">Revision</a></li>
+                            <li><a href="/timetable">Timetable</a></li>
+                            <hr>
+                            <li><a href="/account">Account</a></li>
+                            <li><a href="/logout">Sign Out</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+
+        <main>
+            {% block body %}{% endblock %}
+        </main>
+
     </body>
 </html>

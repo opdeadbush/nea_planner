@@ -1,11 +1,13 @@
 {% extends "home_layout.html" %}
 
 {% block body %}
-    <div class="banner container-fluid p-5 bg-secondary text-white text-center text-bottom">
-        <h1 style="font-size:50px; opacity:0.6"> Welcome, {{user}} </h1>
-        <p style="opacity: 0.6"> Scroll to see your tasks </p>
+    <div class="banner">
+        <h1> Welcome, {{user}} </h1>
+        <p> Scroll to see your tasks </p>
     </div>
-    <main class="container-fluid text-white-50 p-5 align-right">
+    <div class="page-body">
+        <h1>Tasks to do:</h1>
+        <hr>
         <div class="row">
             {% for subject in subject_list %}
                 <div class="col-sm-4 mb-4">
@@ -28,5 +30,5 @@
             <p>no tasks!</p>
             {% endif %}
         </div>  
-    </main>
+    </div>
 {% endblock %}
