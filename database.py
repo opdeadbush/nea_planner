@@ -15,19 +15,19 @@ def get_user_details(username):
     connection.close()
     return details
 
-def check_for_password(password_hash):
+def check_for_password(email):
     connection = sqlite3.connect("./nea_database.db")
     query="""
-    SELECT password_hash FROM user_info WHERE password_hash = ?
+    SELECT password_hash FROM user_info WHERE email = ?
     """
-    cursor = connection.execute(query, (password_hash,)).fetchall()
+    cursor = connection.execute(query, (email,)).fetchall()
     if cursor:
-        print(cursor[0])
+        result = True
     else:
-        print(cursor)
+        result = False
     connection.commit()
     connection.close()
-    return
+    return result
 
 def insert(attribute):
     connection = sqlite3.connect("./nea_database.db")

@@ -11,12 +11,16 @@ footer {
 
 body {
     background-color: lightslategray;
-    font-family: Helvetica, Sans-Serif;
+    font-family: 'Courier New', Courier, monospace
+}
+
+nav {
+    margin-bottom: 10px;
+    padding: 100px;
 }
 
 .login-page {
-    height: 100vh;
-    align-items: center;
+    height: 80%;
 }
 
 .login {
@@ -24,20 +28,97 @@ body {
     height: min-content;
     padding: 20px;
     border-radius: 12px;
-    background: #99AABB;
+    background: #8899AA;
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
 }
 
 .login h1 {
     font-size: 36px;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
+    color: #FFFFFF;
 }
 
-.login form {
-    font-size: 20px;
+.login .error{
+    color:red;
+    text-align: center;
+    border-bottom:none;
+    margin: 0px;
 }
 
-.login form .form-group {
-    margin-bottom: 12px;
+.login hr {
+    background-color:#FFFFFF;
+    height: 2px;
+    border: 0px;
+}
+
+.login a {
+    text-decoration-line: none;
+}
+
+.login div {
+    position: relative;
+    border-bottom: 2px solid #FFFFFF;
+    margin: 30px 0;
+}
+
+.login input {
+    width: 100%;
+    border: none;
+    background: none;
+    outline: none;
+    padding: 0 5px;
+    height: 40px;
+    font-size: 16px
+}
+
+.login label {
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    color: #FFFFFF;
+    transform: translateY(-50%);
+    font-size: 16px;
+    pointer-events: none;
+    transition: .5s
+}
+
+.login div span::before{
+    content: '';
+    position: absolute;
+    top: 40px;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background: royalblue;
+    transition: .5s;
+  }
+
+.login div input:focus ~ label,
+.login div input:valid ~ label{
+    top: -5px;
+    color: royalblue;
+}
+
+.login div input:focus ~ span::before,
+.login div input:valid ~ span::before{
+    width: 100%;
+}
+
+.login input[type="submit"] {
+    width: 100%;
+    border-radius: 25px;
+    margin-bottom: 20px;
+    background-color:royalblue;
+}
+
+.login .no-underline {
+    font-size: 16px;
+    border-bottom:none;
+    margin: 0px;
+    text-align: center;
 }
 
 .banner {
@@ -50,11 +131,6 @@ body {
 
 .wrapper{
     display: inline-block
-}
-
-.error {
-    color: #FF0000;
-    font-size: large
 }
 
 .card-color {

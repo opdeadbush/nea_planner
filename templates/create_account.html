@@ -3,38 +3,47 @@
 {% block body %}
 
 
-<main class="p-3">
+<main class="p-3 container-fluid login vertial-center">
     <form action="/create_account" method="post">
-        {% for key, value in fields.items() %}
-        {% if key == "password" or key == "email" %}
+        <h1>Create account:</h1>
+        <hr>
+        {% if message %}
+        <strong class="error">{{message}}</strong>
+        {% endif %}
         <div class="mb-3">
-            <label for={{key}} class="form-label">{{key}}</label>
-            <input type={{value}} class="form-control bg-red" id={{key}} name={{key}} required autocomplete="off" readonly onfocus="this.removeAttribute('readonly')">
-        </div>
-        {% else %}
-        <div class="mb-3">
-            <label for={{key}} class="form-label">{{value}}</label>
-            <input type=text class="form-control bg-red" id={{key}} name={{key}} placeholder="{{value}}" required autocomplete="off">
-        </div>
-        <div class="mb-3">
-            <label for={{key}} class="form-label">{{value}}</label>
-            <input type=text class="form-control bg-red" id={{key}} name={{key}} placeholder="{{value}}" required autocomplete="off">
+            <input type=text id=username name=username required autocomplete="off">
+            <span></span>
+            <label for=username>Choose a username:</label>
         </div>
         <div class="mb-3">
-            <label for={{key}} class="form-label">{{value}}</label>
-            <input type=text class="form-control bg-red" id={{key}} name={{key}} placeholder="{{value}}" required autocomplete="off">
+            <input type=text id=first_name name=first_name required autocomplete="off">
+            <span></span>
+            <label for=first_name>Enter your first name:</label>
         </div>
         <div class="mb-3">
-            <label for={{key}} class="form-label">{{value}}</label>
-            <input type=text class="form-control bg-red" id={{key}} name={{key}} placeholder="{{value}}" required autocomplete="off">
+            <input type=text id=last_name name=last_name required autocomplete="off">
+            <span></span>
+            <label for=last_name>Enter your last name:</label>
         </div>
         <div class="mb-3">
-            <label for={{key}} class="form-label">{{value}}</label>
-            <input type=text class="form-control bg-red" id={{key}} name={{key}} placeholder="{{value}}" required autocomplete="off">
+            <input type=email id=email name=email required autocomplete="off">
+            <span></span>
+            <label for=email>Enter your email:</label>
         </div>
-        {%endif%}
-        {% endfor %}
-        <input type="submit" value="sign in" class="btn btn-primary">
+        <div class="mb-3">
+            <input type=password id=password name=password required>
+            <span></span>
+            <label for=password>Choose a password:</label>
+        </div>
+        <div class="mb-3">
+            <input type=password id=password_check name=password_check required>
+            <span></span>
+            <label for=password_check class="form-label">Re-enter password:</label>
+        </div>
+        <input type="submit" value="create" class="btn btn-primary">
+        <div class="no-underline">
+            <a href="/">Abort!</a>
+        </div>
     </form>
 </main>
 

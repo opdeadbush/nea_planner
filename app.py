@@ -1,6 +1,5 @@
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, redirect, render_template, request, session
 from flask_session import Session
-import sqlite3
 import database
 
 app = Flask(__name__)
@@ -13,39 +12,36 @@ Session(app)
 def index():
     if not session.get("name"):
         return redirect("/sign_in")
-    return redirect("/home")
+    name = session.get("name")
+    return render_template("home.html", user=name, subject_list=["maths", "physics"])
 
-@app.route("/sign_in", methods=["POST", "GET"])
-def sign_in():
-    if request.method == "POST":
-        session["name"] = request.form.get("username")
-        return redirect("/")
-    return render_template("sign_in.html")
-
-@app.route("/home", methods=["GET"])
-def home():
+@app.route("/sign_in", methods=["GET", "POST"])
+def login():
+    message = ""
     if request.method == "POST":
         username = request.form.get("username")
-        user = database.get_name(username)
-        if user:
-            return render_template("home.html", user=user, subject_list=["psychology", "maths", "english", "chemistry", "computing"])
-    return redirect("/sign_in")
+        name, password = database.get_user_details(username)
+        print(name, password, username)
+        if name and password == database.hash(request.form.get("password")):
+            session["name"] = name
+            return redirect("/")
+        else:
+            message="Incorrect username or password"
+    return render_template("sign_in.html", message=message)
 
-FIELDS={"username":"Username", "first_name":"First name", "last_name": "Last name", "email": "Email", "password": "Password"}
-
-@app.route("/create_account")
+@app.route("/create_account", methods=["POST", "GET"])
 def create_account():
-    return render_template("create_account.html", fields=FIELDS)
-
-@app.route("/check_account", methods=["POST", "GET"])
-def check_account():
     if request.method == "POST":
-        username = request.form.get("username")
-        first_name = request.form.get("first_name")
-        last_name = request.form.get("last_name")
-        email = request.form.get("email")
-        password = request.form.get("password")
-        hash = database.hash(password)
-        connection = sqlite3.connect("nea_database.db")
-        return render_template("sign_in.html", message=hash) 
-    return render_template("sign_in.html")
+        if database.check_for_password(request.form.get("email")):
+            return render_template("create_account.html", message="Error - Account already exists!")
+        elif request.form.get("password") != request.form.get("password_check"):
+            return render_template("create_account.html", message="Error - Passwords do not match!")
+        else:
+            database.insert((request.form.get("username").upper(), request.form.get("first_name"), request.form.get("last_name"), request.form.get("email"), database.hash(request.form.get("password"))))
+            return redirect("/")
+    return render_template("create_account.html")
+
+@app.route("/logout")
+def logout():
+    session["name"] = None
+    return redirect("/")
