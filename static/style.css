@@ -12,6 +12,7 @@ footer {
 body {
     background-color: lightslategray;
     font-family: 'Courier New', Courier, monospace
+<<<<<<< HEAD
 }
 
 nav {
@@ -21,6 +22,15 @@ nav {
 
 .login-page {
     height: 80%;
+=======
+}
+
+.login-page {
+    height: 100vh;
+    align-items: center;
+    flex:content;
+    justify-content: center;
+>>>>>>> da49cd8d573d777f199c09ef3fa2da796334a457
 }
 
 .login {
@@ -39,6 +49,7 @@ nav {
     font-size: 36px;
     margin-bottom: 20px;
     color: #FFFFFF;
+<<<<<<< HEAD
 }
 
 .login .error{
@@ -74,6 +85,36 @@ nav {
     font-size: 16px
 }
 
+=======
+}
+
+.login strong{
+    color: red;
+    background-color:darkred;
+    text-align: center;
+}
+
+.login a {
+    text-decoration-line: none;
+}
+
+.login div {
+    position: relative;
+    border-bottom: 2px solid #FFFFFF;
+    margin: 30px 0;
+}
+
+.login input {
+    width: 100%;
+    border: none;
+    background: none;
+    outline: none;
+    padding: 0 5px;
+    height: 40px;
+    font-size: 16px
+}
+
+>>>>>>> da49cd8d573d777f199c09ef3fa2da796334a457
 .login label {
     position: absolute;
     top: 50%;
@@ -107,6 +148,18 @@ nav {
     width: 100%;
 }
 
+<<<<<<< HEAD
+=======
+.pass{
+    margin: -5px 0 20px 5px;
+    color: #a6a6a6;
+    cursor: pointer;
+  }
+  .pass:hover{
+    text-decoration: underline;
+  }
+
+>>>>>>> da49cd8d573d777f199c09ef3fa2da796334a457
 .login input[type="submit"] {
     width: 100%;
     border-radius: 25px;
