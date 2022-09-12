@@ -1,3 +1,4 @@
+import re
 from flask import Flask, redirect, render_template, request, session
 from flask_session import Session
 import database
@@ -47,6 +48,14 @@ def tasks():
         return redirect("/sign_in")
     if request.method == "GET":
         return render_template("tasks.html")
+    
+@app.route("/tasks/<int:number>")
+def show_task(number):
+    if not session.get("name"):
+        return redirect("/sign_in")
+    if request.method == "GET":
+        message = database.get_task_by_id(number)
+        return render_template("tasks.html", message=message)
     
 
 @app.route("/revision")
