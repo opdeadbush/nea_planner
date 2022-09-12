@@ -242,6 +242,10 @@ nav .dropdown{
     border: 0px;
 }
 
+.page-body ul {
+    list-style: none;
+}
+
 .card {
     background-color: #8899AA;
     height: 100%;

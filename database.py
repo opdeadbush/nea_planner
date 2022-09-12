@@ -3,7 +3,7 @@ import sqlite3
 from tabnanny import check
 from webbrowser import get
 
-def get_user_details(username):
+def get_username_and_password(username):
     username=username.upper()
     connection = sqlite3.connect("./nea_database.db")
     value = connection.execute("SELECT first_name, password_hash FROM user_info WHERE username = ?", (username,)).fetchall()
@@ -11,6 +11,17 @@ def get_user_details(username):
         details = value[0]
     else:
         details = ('','')
+    connection.commit()
+    connection.close()
+    return details
+
+def get_user_details(username):
+    connection = sqlite3.connect("./nea_database.db")
+    cursor = connection.execute("SELECT * FROM user_info where username = ?", (username, )).fetchall()
+    if cursor:
+        details = cursor[0]
+    else:
+        details = ("", "", "", "", "")
     connection.commit()
     connection.close()
     return details
@@ -47,5 +58,4 @@ def f(x):
     return (x)
 
 if __name__ == "__main__":
-    for x in range(10000000):
-        y = f(x)
+    print(get_user_details("H"))

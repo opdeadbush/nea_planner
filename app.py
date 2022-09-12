@@ -20,8 +20,8 @@ def login():
     message = ""
     if request.method == "POST":
         username = request.form.get("username")
-        name, password = database.get_user_details(username)
-        print(name, password, username)
+        session["username"] = username
+        name, password = database.get_username_and_password(username)
         if name and password == database.hash(request.form.get("password")):
             session["name"] = name
             return redirect("/")
@@ -68,7 +68,8 @@ def account():
     if not session.get("name"):
         return redirect("/sign_in")
     if request.method == "GET":
-        return render_template("account.html", name=session.get("name"))
+        username, first_name, last_name, email, password = database.get_user_details(session.get("username"))
+        return render_template("account.html", name=first_name, username = username, last_name = last_name, email = email, password = password)
 
 @app.route("/logout")
 def logout():
