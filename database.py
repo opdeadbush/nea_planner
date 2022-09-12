@@ -49,6 +49,15 @@ def insert(attribute):
     value = connection.execute(query, attribute)
     connection.commit()
     connection.close()
+    return
+
+def get_task_by_id(id):
+    connection = sqlite3.connect("./nea_database.db")
+    cursor = connection.execute("SELECT * FROM tasks WHERE task_id = ?", (id, )).fetchall()
+    details = cursor[0]
+    connection.commit()
+    connection.close()
+    return details
 
 def hash(string):
     x = hashlib.sha256(str.encode(string))
@@ -58,4 +67,4 @@ def f(x):
     return (x)
 
 if __name__ == "__main__":
-    print(get_user_details("H"))
+    print(get_task_by_id(1))

@@ -2,6 +2,30 @@
 
 {% block body %}
 
-Some Tasks
+<div>{{message}}</div>
+
+<div class="container mt-3">
+    <h2>Simple Collapsible</h2>
+    <p>Click on the button to toggle between showing and hiding content.</p>
+    <button type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#demo">Simple collapsible</button>
+    <div id="demo" class="collapse">
+        <form action="/tasks", method="post">
+            <div class="mb-3">
+                <input type=text id=username name=username required autocomplete="off">
+                <span></span>
+                <label for=username>Task name</label>
+            </div>
+            <div class="mb-3">
+                <input type=text id=first_name name=first_name required autocomplete="off">
+                <span></span>
+                <label for=first_name>Description</label>
+            </div>
+            <div class="mb-3">
+                <input type=text id=last_name name=last_name required autocomplete="off">
+                <span></span>
+                <label for=last_name>Username</label>
+            </div>
+    </div>
+  </div>
 
 {% endblock %}
