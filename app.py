@@ -14,19 +14,18 @@ def index():
     if not session.get("name"):
         return redirect("/sign_in")
     name = session.get("name")
+    session["tasks"] = database.get_task_by_username(session["username"])
     return render_template("home.html", user=name, tasks = session["tasks"])
 
 @app.route("/sign_in", methods=["GET", "POST"])
 def login():
     message = ""
     if request.method == "POST":
-        username = request.form.get("username")
+        username = request.form.get("username").upper()
         session["username"] = username
         name, password = database.get_username_and_password(username)
         if name and password == database.hash(request.form.get("password")):
             session["name"] = name
-            session["tasks"] = database.get_task_by_username(username)
-            print(session["tasks"])
             return redirect("/")
         else:
             message="Incorrect username or password"

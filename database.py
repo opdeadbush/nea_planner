@@ -69,13 +69,6 @@ def insert(attribute):
     connection.close()
     return
 
-def update_tasks(field, attributee):
-    connection = sqlite3.connect("./nea_database.db")
-    query = f"""
-    UPDATE user_info
-    SET {} = ?
-    """
-
 def hash(string):
     x = hashlib.sha256(str.encode(string))
     return(x.hexdigest())

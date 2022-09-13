@@ -26,9 +26,6 @@ class Task():
     def get_information(self):
         return [self.id, self.description, self.completed, self.category, self.due_date, self.set_date, self.username]
 
-    def update_attribute(self, attribute, value)
-        database.in
-
 if __name__ == "__main__":
     tasks = Task_Manager("H")
     print(tasks.list_tasks())

@@ -264,6 +264,10 @@ nav .dropdown{
     height: 70%;
 }
 
+.card p {
+    text-align: left;
+}
+
 .container {
     padding: 24px;
 }
