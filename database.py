@@ -40,6 +40,24 @@ def check_for_password(email):
     connection.close()
     return result
 
+def get_task_by_id(id):
+    connection = sqlite3.connect("./nea_database.db")
+    cursor = connection.execute("SELECT * FROM tasks WHERE task_id = ?", (id, )).fetchall()
+    details = cursor[0]
+    connection.commit()
+    connection.close()
+    return details
+
+def get_task_by_username(username):
+    connection = sqlite3.connect("./nea_database.db")
+    cursor = connection.execute("SELECT * FROM tasks WHERE username = ?", (username, )).fetchall()
+    details = []
+    for x in cursor:
+        details.append(x)
+    connection.commit()
+    connection.close()
+    return details
+
 def insert(attribute):
     connection = sqlite3.connect("./nea_database.db")
     query="""
@@ -51,20 +69,16 @@ def insert(attribute):
     connection.close()
     return
 
-def get_task_by_id(id):
+def update_tasks(field, attributee):
     connection = sqlite3.connect("./nea_database.db")
-    cursor = connection.execute("SELECT * FROM tasks WHERE task_id = ?", (id, )).fetchall()
-    details = cursor[0]
-    connection.commit()
-    connection.close()
-    return details
+    query = f"""
+    UPDATE user_info
+    SET {} = ?
+    """
 
 def hash(string):
     x = hashlib.sha256(str.encode(string))
     return(x.hexdigest())
 
-def f(x):
-    return (x)
-
 if __name__ == "__main__":
-    print(get_task_by_id(1))
+    print(get_task_by_username("H"))

@@ -4,10 +4,11 @@
 
 <div>{{message}}</div>
 
-<div class="container mt-3">
-    <h2>Simple Collapsible</h2>
-    <p>Click on the button to toggle between showing and hiding content.</p>
-    <button type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#demo">Simple collapsible</button>
+<div class="container">
+    <h2>Create Task</h2>
+    <hr>
+    <p>Click on the button to create a task</p>
+    <button type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#demo">Create</button>
     <div id="demo" class="collapse">
         <form action="/tasks", method="post">
             <div class="mb-3">
@@ -25,7 +26,9 @@
                 <span></span>
                 <label for=last_name>Username</label>
             </div>
+        </form>
     </div>
   </div>
+  <hr>
 
 {% endblock %}

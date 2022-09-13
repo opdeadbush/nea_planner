@@ -213,7 +213,6 @@ nav .dropdown{
         display: inline-block;
         font-size: 16px;
         width: 100%;
-      
     }
 
     nav .show {
@@ -263,4 +262,22 @@ nav .dropdown{
 
 .card-top {
     height: 70%;
+}
+
+.container {
+    padding: 24px;
+}
+
+.container button {
+    background-color: #2F4F4F;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 25px;
+    margin-bottom: 20px;
+    background-color:#2F4F4F;
+
 }
