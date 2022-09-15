@@ -12,6 +12,7 @@ body {
 
 footer {
     background-color: #333;
+    color: #DDEEFF;
     padding: 20px;
     width: 100%;
 }
@@ -243,6 +244,11 @@ nav .dropdown{
 
 .page-body ul {
     list-style: none;
+}
+
+.page-body a {
+    color: #111;
+    text-decoration: none;
 }
 
 .card {

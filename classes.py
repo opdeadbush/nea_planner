@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-import datetime
 import database
 
 class Task_Manager():
@@ -9,9 +8,17 @@ class Task_Manager():
         for task in tasks:
             self.task_list.append(Task(task[0], task[1], task[2], task[3], task[4], task[5], task[6]))
     
-    def list_tasks(self):
-        y = self.task_list[0].get_information()
-        return y
+    def get_tasks(self):
+        tasks = []
+        for x in self.task_list:
+            tasks.append(x.get_information())
+        return tasks
+
+    def get_task_by_id(self, id):
+        for x in self.task_list:
+            if x.get_id == id:
+                return x.get_information()
+        return
 
 class Task():
     def __init__(self, id, description, completed, category, due_date, set_date, username):
@@ -26,6 +33,13 @@ class Task():
     def get_information(self):
         return [self.id, self.description, self.completed, self.category, self.due_date, self.set_date, self.username]
 
+    def mark_task_complete(self):
+        self.completed = True
+    
+    def get_id(self):
+        return self.id
+
 if __name__ == "__main__":
     tasks = Task_Manager("H")
-    print(tasks.list_tasks())
+    x = tasks.get_task_by_id(1)
+    print(x)
