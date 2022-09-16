@@ -39,7 +39,29 @@ class Task():
     def get_id(self):
         return self.id
 
+class Timetable():
+    def __init__(self) -> None:
+        self.week = {
+            self.Monday: Day(),
+            self.Tuesday: Day(),
+            self.Wednesday: Day(),
+            self.Thursday: Day(),
+            self.Friday: Day(),
+            self.Saturday: Day(),
+            self.Sunday: Day()
+        }
+                                        
+    def _display(self):
+        for key, value in self.week:
+            print(key, value)
+
+
+class Day():
+    def __init__(self) -> None:
+        self.tasks_today = []
+
+    def add_task(self, task_id):
+        self.tasks_today.append(task_id)
+
 if __name__ == "__main__":
-    tasks = Task_Manager("H")
-    x = tasks.get_task_by_id(1)
-    print(x)
+    timetable = Timetable()

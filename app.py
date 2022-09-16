@@ -58,7 +58,6 @@ def show_task(number):
         message = database.get_task_by_id(number)
         return render_template("tasks.html", message=message)
     
-
 @app.route("/revision")
 def revision():
     if not session.get("name"):
