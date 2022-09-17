@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+import datetime
 import database
 
 class Task_Manager():
@@ -62,6 +62,16 @@ class Day():
 
     def add_task(self, task_id):
         self.tasks_today.append(task_id)
+    
+    def remove_task(self, task_id):
+        self.tasks_today.remove(task_id)
+
+    def display_tasks(self):
+        for x in self.tasks_today:
+            print(database.get_task_by_id(x))
+
 
 if __name__ == "__main__":
-    timetable = Timetable()
+    monday = Day()
+    monday.add_task(1)
+    monday.display_tasks()
