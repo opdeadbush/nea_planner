@@ -1,4 +1,3 @@
-import datetime
 import database
 
 class Task_Manager():
@@ -42,19 +41,32 @@ class Task():
 class Timetable():
     def __init__(self) -> None:
         self.week = {
-            self.Monday: Day(),
-            self.Tuesday: Day(),
-            self.Wednesday: Day(),
-            self.Thursday: Day(),
-            self.Friday: Day(),
-            self.Saturday: Day(),
-            self.Sunday: Day()
+            "Monday": Day(),
+            "Tuesday": Day(),
+            "Wednesday": Day(),
+            "Thursday": Day(),
+            "Friday": Day(),
+            "Saturday": Day(),
+            "Sunday": Day()
         }
-                                        
-    def _display(self):
-        for key, value in self.week:
-            print(key, value)
 
+    def add_task_to_day(self, day, task_id):
+        self.week[day].add_task(task_id)                                 
+    
+    def display(self):
+        result = []
+        for key in self.week:
+            list_of_tasks = self.week[key].get_tasks()
+            if list_of_tasks:
+                print(key + ":")
+                for task in list_of_tasks:
+                    print(f"    ➟ {task[3]}")
+                print("__________________")
+                result.append(f"{key}: {list_of_tasks}")
+            else:
+                continue
+        return result
+        
 
 class Day():
     def __init__(self) -> None:
@@ -62,16 +74,20 @@ class Day():
 
     def add_task(self, task_id):
         self.tasks_today.append(task_id)
-    
+
     def remove_task(self, task_id):
         self.tasks_today.remove(task_id)
 
-    def display_tasks(self):
+    def get_tasks(self):
+        tasks = []
         for x in self.tasks_today:
-            print(database.get_task_by_id(x))
+            tasks.append(database.get_task_by_id(x))
+        return tasks
 
 
 if __name__ == "__main__":
-    monday = Day()
-    monday.add_task(1)
-    monday.display_tasks()
+    week = Timetable()
+    for x in week.week:
+        for y in range(1, 5, 1):
+            week.add_task_to_day(x, y)
+    week.display()

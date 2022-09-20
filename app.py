@@ -1,7 +1,7 @@
 import re
 from flask import Flask, redirect, render_template, request, session
 from flask_session import Session
-import database
+import database, classes
 app = Flask(__name__)
 
 app.config["SESSION_PERMANENT"] = False
@@ -26,6 +26,8 @@ def login():
         name, password = database.get_username_and_password(username)
         if name and password == database.hash(request.form.get("password")):
             session["name"] = name
+            if not session.get("timetable"):
+                session["timetable"] = classes.Timetable()
             return redirect("/")
         else:
             message="Incorrect username or password"
@@ -70,7 +72,13 @@ def timetable():
     if not session.get("name"):
         return redirect("/sign_in")
     if request.method == "GET":
-        return render_template("timetable.html")
+        for x in session.get("timetable").week:
+            for y in range(1, 5, 1):
+                session.get("timetable").add_task_to_day(x, y)
+        return render_template("timetable.html", message = session.get("timetable").display())
+    if request.method == "POST":
+        session["timetable"] = classes.Timetable()
+        return redirect("/timetable")
 
 @app.route("/account")
 def account():

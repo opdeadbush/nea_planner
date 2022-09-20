@@ -2,6 +2,13 @@
 
 {% block body %}
 
-A Timetable
+{% for x in message %}
+{{x}}
+<hr>
+{% endfor %}
+
+<form action="/timetable">
+    <input type="submit" value="Clear" class="btn btm-primary">
+</form>
 
 {% endblock %}
