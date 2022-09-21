@@ -45,19 +45,28 @@ def create_account():
             return redirect("/")
     return render_template("create_account.html")
 
-@app.route("/tasks")
+@app.route("/tasks", methods=["POST", "GET"])
 def tasks():
     if not session.get("name"):
         return redirect("/sign_in")
     if request.method == "GET":
         return render_template("tasks.html")
-    
+    if request.method == "POST":
+        description = request.form.get("description")
+        category = request.form.get("category")
+        due_date = request.form.get("due_date")
+        print(description, category, due_date)
+        return redirect("/tasks")
+
 @app.route("/tasks/<int:number>")
 def show_task(number):
     if not session.get("name"):
         return redirect("/sign_in")
     if request.method == "GET":
-        message = database.get_task_by_id(number)
+        if session.get("username") == database.get_task_by_id(number)[6]:
+            message = database.get_task_by_id(number)
+        else:
+            message = "Not your task"
         return render_template("tasks.html", message=message)
     
 @app.route("/revision")
@@ -67,14 +76,11 @@ def revision():
     if request.method == "GET":
         return render_template("revision.html")
 
-@app.route("/timetable")
+@app.route("/timetable", methods=["POST", "GET"])
 def timetable():
     if not session.get("name"):
         return redirect("/sign_in")
     if request.method == "GET":
-        for x in session.get("timetable").week:
-            for y in range(1, 5, 1):
-                session.get("timetable").add_task_to_day(x, y)
         return render_template("timetable.html", message = session.get("timetable").display())
     if request.method == "POST":
         session["timetable"] = classes.Timetable()

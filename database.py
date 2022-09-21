@@ -50,7 +50,7 @@ def get_task_by_id(id):
 
 def get_task_by_username(username):
     connection = sqlite3.connect("./nea_database.db")
-    cursor = connection.execute("SELECT * FROM tasks WHERE username = ?", (username, )).fetchall()
+    cursor = connection.execute("SELECT * FROM tasks JOIN subjects ON tasks.category = subjects.subject WHERE tasks.username = ?", (username, )).fetchall()
     details = []
     for x in cursor:
         details.append(x)

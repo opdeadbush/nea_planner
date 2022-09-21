@@ -12,20 +12,30 @@
     <div id="demo" class="collapse">
         <form action="/tasks", method="post">
             <div class="mb-3">
-                <input type=text id=username name=username required autocomplete="off">
+                <input type=text id=description name=description required autocomplete="off">
                 <span></span>
-                <label for=username>Task name</label>
+                <label for=description>Description</label>
             </div>
             <div class="mb-3">
-                <input type=text id=first_name name=first_name required autocomplete="off">
-                <span></span>
-                <label for=first_name>Description</label>
+                <select name="category" id="category">
+                    <option value="art">Art</option>
+                    <option value="biology">Biology</option>
+                    <option value="chemistry">Chemistry</option>
+                    <option value="computing">Computing</option>
+                    <option value="geography">Geography</option>
+                    <option value="history">History</option>
+                    <option value="maths">Maths</option>
+                    <option value="physics">Physics</option>
+                    <option value="psychology">Psychology</option>
+                </select>
+                <label for="category">Category</label>
             </div>
             <div class="mb-3">
-                <input type=text id=last_name name=last_name required autocomplete="off">
+                <input type="date" id=due_date name=due_date required>
                 <span></span>
-                <label for=last_name>Username</label>
+                <label for="due_date">Due date</label>
             </div>
+            <input type="submit">
         </form>
     </div>
   </div>
