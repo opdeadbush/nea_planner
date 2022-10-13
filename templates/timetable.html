@@ -1,14 +1,15 @@
-{% extends "home_layout.html" %}
+{% extends "home_layout.html" %} {% block body %}
 
-{% block body %}
-
-{% for x in message %}
-{{x}}
-<hr>
-{% endfor %}
-
-<form action="/timetable" method="post">
-    <input type="submit" value="Clear" class="btn btm-primary">
-</form>
+<div class="page-body">
+    <div class="container">
+        {% for x in message %}
+        <button>{{x[0]}}</button>
+        {% endfor %}
+    </div>
+    <hr/>
+    <form action="/timetable" method="post">
+        <input type="submit" value="Edit" class="btn btm-primary" />
+    </form>
+</div>
 
 {% endblock %}

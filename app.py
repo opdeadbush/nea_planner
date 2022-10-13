@@ -1,7 +1,7 @@
 import re
 from flask import Flask, redirect, render_template, request, session
 from flask_session import Session
-import database, classes
+import database, classes, datetime, functions
 app = Flask(__name__)
 
 app.config["SESSION_PERMANENT"] = False
@@ -14,7 +14,7 @@ def index():
     if not session.get("name"):
         return redirect("/sign_in")
     name = session.get("name")
-    session["tasks"] = database.get_task_by_username(session["username"])
+    session["tasks"] = database.get_tasks_by_username(session["username"])
     return render_template("home.html", user=name, tasks = session["tasks"])
 
 @app.route("/sign_in", methods=["GET", "POST"])
@@ -24,11 +24,10 @@ def login():
         username = request.form.get("username").upper()
         session["username"] = username
         name, password = database.get_username_and_password(username)
-        if name and password == database.hash(request.form.get("password")):
+        if name and password == functions.hash(request.form.get("password")):
             session["name"] = name
-            if not session.get("timetable"):
-                session["timetable"] = classes.Timetable()
-            return redirect("/")
+            session["timetable"] = functions.initialise_timetable(database.get_timetable("H"))
+            return redirect("/")    
         else:
             message="Incorrect username or password"
     return render_template("sign_in.html", message=message)
@@ -36,12 +35,14 @@ def login():
 @app.route("/create_account", methods=["POST", "GET"])
 def create_account():
     if request.method == "POST":
-        if database.check_for_password(request.form.get("email")):
+        if database.check_for_email(request.form.get("email")):
             return render_template("create_account.html", message="Error - Account already exists!")
+        elif database.check_for_username(request.form.get("username")):
+            return render_template("create_account.html", message="Username taken")
         elif request.form.get("password") != request.form.get("password_check"):
             return render_template("create_account.html", message="Error - Passwords do not match!")
         else:
-            database.insert((request.form.get("username").upper(), request.form.get("first_name"), request.form.get("last_name"), request.form.get("email"), database.hash(request.form.get("password"))))
+            database.insert((request.form.get("username").upper(), request.form.get("first_name"), request.form.get("last_name"), request.form.get("email"), functions.hash(request.form.get("password"))))
             return redirect("/")
     return render_template("create_account.html")
 
@@ -50,15 +51,18 @@ def tasks():
     if not session.get("name"):
         return redirect("/sign_in")
     if request.method == "GET":
-        return render_template("tasks.html")
+        subejcts = database.get_subjects()
+        return render_template("tasks.html", list_of_tasks = session.get("tasks"), subjects = subejcts)
     if request.method == "POST":
-        description = request.form.get("description")
+        description = request.form.get("paragraph_text")
+        completed = False
         category = request.form.get("category")
-        due_date = request.form.get("due_date")
-        print(description, category, due_date)
+        due_date = request.form.get("due_date")    
+        set_date = datetime.date.today()    
+        database.create_task((description, completed, category, due_date, set_date, session.get("username")))
         return redirect("/tasks")
 
-@app.route("/tasks/<int:number>")
+@app.route("/tasks/<int:number>", methods=["POST", "GET"])
 def show_task(number):
     if not session.get("name"):
         return redirect("/sign_in")
@@ -68,23 +72,46 @@ def show_task(number):
         else:
             message = "Not your task"
         return render_template("tasks.html", message=message)
+    if request.method == "POST":
+        database.mark_as_done(number)
+        return redirect("/tasks")
     
-@app.route("/revision")
+@app.route("/revision", methods = ["POST", "GET"])
 def revision():
     if not session.get("name"):
         return redirect("/sign_in")
     if request.method == "GET":
-        return render_template("revision.html")
+        print(session.get("revision_set_list"))
+        revision_set_names = []
+        for set in session.get("revision_set_list"):
+            revision_set_names.append(set.get_details())
+        print(revision_set_names)
+        return render_template("revision.html", revision_set_list = revision_set_names)
+    if request.method == "POST":
+        revision_id = request.form.get("revision_id")
+        return redirect(f"/revision/{revision_id}")
+
+@app.route("/revision/<int:revision_id>")
+def revision_notes():
+    if not session.get("name"):
+        return redirect("/sign_in")
+    if request.method == "GET":
+        return render_template("revision_task.html")
 
 @app.route("/timetable", methods=["POST", "GET"])
 def timetable():
     if not session.get("name"):
         return redirect("/sign_in")
     if request.method == "GET":
-        return render_template("timetable.html", message = session.get("timetable").display())
+        #session["timetable"].add_task_to_day("Monday", 2)
+        week = session.get("timetable").display()
+        return render_template("timetable.html", message = week)
     if request.method == "POST":
-        session["timetable"] = classes.Timetable()
-        return redirect("/timetable")
+        for x in session["timetable"].week:
+            for y in range(1, 5, 1):
+                session["timetable"].add_task_to_day(x, y)
+        week = session.get("timetable").display()   
+        return render_template("timetable.html", message = week, edit=True)
 
 @app.route("/account")
 def account():
@@ -96,5 +123,9 @@ def account():
 
 @app.route("/logout")
 def logout():
+    print(session["timetable"].get_timetable_data())
+    functions.save_timetable(session["timetable"].get_timetable_data(), session["username"])
     session["name"] = None
+    session["username"] = None
+    session["timetable"] = None
     return redirect("/")

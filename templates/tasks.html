@@ -2,43 +2,48 @@
 
 {% block body %}
 
-<div>{{message}}</div>
-
-<div class="container">
-    <h2>Create Task</h2>
-    <hr>
-    <p>Click on the button to create a task</p>
-    <button type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#demo">Create</button>
-    <div id="demo" class="collapse">
-        <form action="/tasks", method="post">
-            <div class="mb-3">
-                <input type=text id=description name=description required autocomplete="off">
-                <span></span>
-                <label for=description>Description</label>
-            </div>
-            <div class="mb-3">
-                <select name="category" id="category">
-                    <option value="art">Art</option>
-                    <option value="biology">Biology</option>
-                    <option value="chemistry">Chemistry</option>
-                    <option value="computing">Computing</option>
-                    <option value="geography">Geography</option>
-                    <option value="history">History</option>
-                    <option value="maths">Maths</option>
-                    <option value="physics">Physics</option>
-                    <option value="psychology">Psychology</option>
-                </select>
-                <label for="category">Category</label>
-            </div>
-            <div class="mb-3">
-                <input type="date" id=due_date name=due_date required>
-                <span></span>
-                <label for="due_date">Due date</label>
-            </div>
-            <input type="submit">
+<div class="page-body">
+    {% if message %}
+    <div class="container">
+        <div>{{message}}</div>
+        <form action="/tasks/{{message[0]}}" method="post">
+            <input type="submit" value="Mark as done">
         </form>
     </div>
-  </div>
-  <hr>
+    {% endif %}
+    <div class="container align-left">
+        <h2>Create Task</h2>
+        <hr>
+        <p>Click on the button to create a task</p>
+        <button type="button" class="btn" data-bs-toggle="collapse" data-bs-target="#demo">Create</button>
+        <div id="demo" class="collapse">
+            <form action="/tasks", method="post">
+                <div>
+                    <textarea name="paragraph_text" cols="100" rows="3" placeholder="Write a description" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <select name="category" id="category">
+                        {% for x in subjects %}
+                        <option value="{{x[0]}}">{{x[0].capitalize()}}</option>
+                        {% endfor %}
+                    </select>
+                    <label for="category">Category</label>
+                </div>
+                <div class="mb-3">
+                    <input type="date" id=due_date name=due_date required>
+                    <span></span>
+                    <label for="due_date">Due date</label>
+                </div>
+                <input type="submit" class="button">
+            </form>
+        </div>
+    </div>
+    <hr>
+    <div class="container">
+        {% for task in list_of_tasks %}
+        <p>{{task}}</p>
+        {% endfor %}
+    </div>
+</div>
 
 {% endblock %}

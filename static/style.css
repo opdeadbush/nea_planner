@@ -7,7 +7,8 @@ body {
     background-repeat: no-repeat;
     background-position:bottom;
     background-size: cover;
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-attachment: fixed;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 footer {
@@ -236,6 +237,10 @@ nav .dropdown{
     text-align: left;
 }
 
+.align-left {
+    text-align: left;
+}
+
 .page-body hr {
     background-color: #2F4F4F;
     height: 2px;
@@ -272,13 +277,17 @@ nav .dropdown{
 
 .card p {
     text-align: left;
+    white-space: nowrap; 
+    width: 100%; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
 }
 
 .container {
     padding: 24px;
 }
 
-.container button {
+.container button, .button{
     background-color: #2F4F4F;
     border: none;
     color: white;
@@ -289,4 +298,19 @@ nav .dropdown{
     border-radius: 25px;
     margin-bottom: 20px;
     background-color:#2F4F4F;
+}
+
+.container button:hover {
+    background-color: #2F4F4F;
+    color: white
+}
+
+.container button:focus { 
+    background-color: #2F4F4F;
+    border: 0px;
+    color: white;
+}
+
+.collapse input .dropdown{
+    background-color: #2F4F4F;
 }
