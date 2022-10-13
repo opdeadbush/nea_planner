@@ -26,7 +26,7 @@ def login():
         name, password = database.get_username_and_password(username)
         if name and password == functions.hash(request.form.get("password")):
             session["name"] = name
-            session["timetable"] = functions.initialise_timetable(database.get_timetable("H"))
+            session["timetable"] = functions.initialise_timetable(database.get_timetable(session["username"]))
             return redirect("/")    
         else:
             message="Incorrect username or password"
@@ -103,15 +103,12 @@ def timetable():
     if not session.get("name"):
         return redirect("/sign_in")
     if request.method == "GET":
-        #session["timetable"].add_task_to_day("Monday", 2)
         week = session.get("timetable").display()
-        return render_template("timetable.html", message = week)
+        return render_template("timetable.html", message = week, tasks = database.get_tasks_by_username(session["username"]), days = [x for x in session["timetable"].week] )
     if request.method == "POST":
-        for x in session["timetable"].week:
-            for y in range(1, 5, 1):
-                session["timetable"].add_task_to_day(x, y)
+        session["timetable"].add_task_to_day(request.form.get("day"), request.form.get("task"))
         week = session.get("timetable").display()   
-        return render_template("timetable.html", message = week, edit=True)
+        return redirect("/timetable")
 
 @app.route("/account")
 def account():

@@ -52,14 +52,11 @@ class Timetable:
         result = []
         for key in self.week:
             list_of_tasks = self.week[key].get_tasks()
-            if list_of_tasks:
-                # print(key + ":")
-                # for task in list_of_tasks:
-                #     print(f"    ➟ {task[3]}")
-                # print("__________________")
-                result.append([key, list_of_tasks])
-            else:
-                continue
+            #print(key + ":")
+            #for task in list_of_tasks:
+                #print(f"    ➟ {task[3]}")
+            #print("__________________")
+            result.append([key, list_of_tasks])
         return result
         
 class Day:
@@ -102,5 +99,13 @@ if __name__ == "__main__":
     # revision_set = Revision_Set("Maths")
     # revision_set.create_revision_note("Integration", "Integrate innit")
     # revision_set.display_notes()
-    timetable = functions.initialise_timetable(database.get_timetable("H"))
-    print(timetable.get_timetable_data())
+
+    # timetable = functions.initialise_timetable(database.get_timetable("H"))
+    # print(timetable.get_timetable_data())
+
+    timetable = Timetable()
+    timetable.add_task_to_day("Monday", 1)
+    timetable.add_task_to_day("Monday", 4)
+    timetable.add_task_to_day("Tuesday", 2)
+    for x in  timetable.display():
+        print(f"{x[0]} --> {x[1]}")
