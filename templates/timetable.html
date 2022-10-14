@@ -31,26 +31,26 @@
     </div>
     <hr>
     <h2>Edit Timetable Day</h1>
-    <form action="/timetable" method="post">
-        <div>
-            <select id="task" name="task">
+    <form action="/timetable" method="post" >
+        <div class="form-group">
+            <label for="task">Add a task</label>
+            <select id="task" name="task" class="form-control">
                 {% for x in tasks %}
                     <option value="{{x[0]}}" style="overflow: hidden;">{{x[3]}} ⇨ {{x[1]}}</option>
                 {% endfor %}
             </select>
             <span></span>
-            <label for="task">Add a task</label>
         </div>
-        <div>
-            <select id="day" name="day">
+        <div class="form-group">
+            <label for="day">Add a task</label>
+            <select id="day" name="day" class="form-control">
                 {% for day in days %}
                     <option value="{{day}}">{{day}}</option>
                 {% endfor %}
             </select>
             <span></span>
-            <label for="day">Add a task</label>
         </div>
-        <input type="submit" name="Submit">
+        <input type="submit" class="button">
     </form>
 </div>
 

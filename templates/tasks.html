@@ -18,21 +18,21 @@
         <button type="button" class="btn" data-bs-toggle="collapse" data-bs-target="#demo">Create</button>
         <div id="demo" class="collapse">
             <form action="/tasks", method="post">
-                <div>
-                    <textarea name="paragraph_text" cols="100" rows="3" placeholder="Write a description" required></textarea>
+                <div class="form-group">
+                    <textarea name="paragraph_text" cols="100" rows="3" placeholder="Write a description" class="form-control"required></textarea>
                 </div>
-                <div class="mb-3">
-                    <select name="category" id="category">
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select name="category" id="category" class="form-control">
                         {% for x in subjects %}
                         <option value="{{x[0]}}">{{x[0].capitalize()}}</option>
                         {% endfor %}
                     </select>
-                    <label for="category">Category</label>
                 </div>
-                <div class="mb-3">
-                    <input type="date" id=due_date name=due_date required>
-                    <span></span>
+                <div class="form-group">
                     <label for="due_date">Due date</label>
+                    <input type="date" id=due_date name=due_date class="form-control"required>
+                    <span></span>
                 </div>
                 <input type="submit" class="button">
             </form>
