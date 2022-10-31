@@ -1,9 +1,67 @@
 {% extends "home_layout.html" %}
 
 {% block body %}
-
+<div class="container hide">
+    <h1>Choose a revision set</h1>
+    <select id="revision_set" name="revision_set" class="form-select" style="width: 50%; margin:auto; background-color:#8899AA">
+        {% for title in revision %}
+            <option>{{title}}</option>
+        {% endfor %}
+    </select>
+</div>
 <div class="container">
-    Oh NO
+    <div class="container revision" id="focus">
+        <h1 style="text-align: left;">Revision</h1>
+        <hr>
+        <div>        
+            <button id="toggle_focus" style="text-align: left;">focus</button>
+        </div>
+        <div class="row">
+            <div class="col-sm arrow">
+                <button id="prev"><img src="/static/images/arrow.svg" alt="prev" height="50%" width="50%" class="rotate"></button>
+            </div>
+            <div class="col-sm-8">
+                <div class="question" id="term">Term</div>
+                <div class="definition" id="definition">Definition</div>
+            </div>
+            <div class="col-sm arrow">
+                <button id="next"><img src="/static/images/arrow.svg" alt="next" height="50%" width="50%"></button>
+            </div>
+        </div>
+        <div>
+            <button id="Reveal">Reveal</button>
+        </div>
+        <hr>
+    </div>
+    <div class="container hide">
+        <h1>Add A Card</h1>
+        <form action="/revision", method="post">
+            <div class="form-group">
+                <label for="term">Term</label>
+                <input type="text" id=term name=term class="form-control"required autocomplete="off">
+            </div>
+            <div class="form-group">
+                <label for="definition">Definition</label>
+                <input type="text" id=definition name=definition class="form-control"required autocomplete="off">
+            </div>
+            <input type="hidden" value="" id="set_to_add_card" name="set_to_add_card">
+            <input type="submit" class="button">
+        </form>
+        <hr>
+    </div>
+    <div class="container hide">
+        <h1>Create revision set</h1>
+        <div>
+            <form action="/revision" method="post">
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" id=title name=title class="form-control"required autocomplete="off">
+                </div>
+                <input type="submit" class="button">
+            </form>
+        </div>
+    </div>
+    <script type="module" src="/static/revision.js"></script>
 </div>
 
 {% endblock %}

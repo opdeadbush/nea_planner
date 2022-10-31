@@ -1,4 +1,5 @@
 import sqlite3
+from tkinter import E
 
 def execute(query: str, arguments: tuple) -> None:
     connection = sqlite3.connect("./nea_database.db")
@@ -75,6 +76,20 @@ def get_timetable(user):
         execute("INSERT INTO timetable (contents, user) VALUES (?, ?)", (str({"Monday": "", "Tuesday": "", "Wednesday": "", "Thursday": "", "Friday": "", "Saturday": "", "Sunday": ""}), user))
         return get_timetable(user)
     return eval(value[0][0])
+
+def get_revision(user):
+    value = execute_and_return("SELECT revision_data FROM revision WHERE username = ?", (user, ))
+    if value:
+        return value[0]
+    else:
+        execute("INSERT INTO revision (username, revision_data) VALUES (?, ?)", (user, "{}"))
+        return str({})
+
+def insert_revision(contents, user):
+    try:
+        execute("UPDATE revision SET revision_data = ? WHERE username = ?", (str(contents), user))
+    except:
+        execute("INSERT INTO revision (username, revision_data) VALUES (?, ?)", (str(user), str(contents)))
 
 def insert_timetable(contents, user):
     execute("UPDATE timetable SET contents = ? WHERE user = ?", (contents, user))

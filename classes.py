@@ -1,4 +1,5 @@
 from sqlite3 import Time
+from unittest import result
 import database, functions
 
 class Revision_Set:
@@ -46,8 +47,13 @@ class Timetable:
 
     def add_task_to_day(self, day: str, task_id: int) -> None:
         self.week[day].add_task(task_id)  
-        return                               
-    
+        return
+
+    def remove_task_from_day(self, day: str, task_id: int) -> bool:
+        if self.week[day].remove_task(task_id):
+            return True
+        return False
+
     def display(self) -> list:
         result = []
         for key in self.week:
@@ -59,6 +65,12 @@ class Timetable:
             result.append([key, list_of_tasks])
         return result
         
+    def get_length(self) -> int:
+        result = 0
+        for key in self.week:
+            result += len(self.week[key].get_task_ids())
+        return result
+        
 class Day:
     def __init__(self) -> None:
         self.tasks_today = []
@@ -67,9 +79,11 @@ class Day:
         self.tasks_today.append(task_id)
         return
 
-    def remove_task(self, task_id: int) -> None:
-        self.tasks_today.remove(task_id)
-        return
+    def remove_task(self, task_id: int) -> bool:
+        if task_id in self.tasks_today:
+            self.tasks_today.remove(task_id)
+            return True
+        return False
     
     def reorder_day(self, swap_from_id: int, swap_to_id: int) -> None:
         for x in range(len(self.tasks_today)):
@@ -105,7 +119,6 @@ if __name__ == "__main__":
 
     timetable = Timetable()
     timetable.add_task_to_day("Monday", 1)
-    timetable.add_task_to_day("Monday", 4)
-    timetable.add_task_to_day("Tuesday", 2)
-    for x in  timetable.display():
-        print(f"{x[0]} --> {x[1]}")
+    print(timetable.display())
+    print(timetable.remove_task_from_day("Tuesday", 1))
+    print(timetable.display())

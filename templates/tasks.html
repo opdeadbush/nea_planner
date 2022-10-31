@@ -5,43 +5,77 @@
 <div class="page-body">
     {% if message %}
     <div class="container">
-        <div>{{message}}</div>
-        <form action="/tasks/{{message[0]}}" method="post">
-            <input type="submit" value="Mark as done">
-        </form>
-    </div>
-    {% endif %}
-    <div class="container align-left">
-        <h2>Create Task</h2>
-        <hr>
-        <p>Click on the button to create a task</p>
-        <button type="button" class="btn" data-bs-toggle="collapse" data-bs-target="#demo">Create</button>
-        <div id="demo" class="collapse">
-            <form action="/tasks", method="post">
-                <div class="form-group">
-                    <textarea name="paragraph_text" cols="100" rows="3" placeholder="Write a description" class="form-control"required></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="category">Category</label>
-                    <select name="category" id="category" class="form-control">
-                        {% for x in subjects %}
-                        <option value="{{x[0]}}">{{x[0].capitalize()}}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="due_date">Due date</label>
-                    <input type="date" id=due_date name=due_date class="form-control"required>
-                    <span></span>
-                </div>
-                <input type="submit" class="button">
-            </form>
+        <div class="container">
+            <h4>Category</h4>
+            <p>{{message[3]}}</p>
+        </div>
+        <div class="container">
+            <h4>Description</h4>
+            <p>{{message[1]}}</p>
+        </div>
+        <div class="container">
+            <h4>Due date</h4>
+            <p>{{message[4]}}</p>
+        </div>
+        <div class="container">
+            <h4>Set date</h4>
+            <p>{{message[5]}}</p>
+        </div>
+        <div class="container">
+            <h4>Completed</h4>
+            <p>
+                {% if message[2] %} 
+                True
+                {% else %} 
+                False
+                {% endif %}
+                <form action="/tasks/{{message[0]}}" method="post">
+                    <input type="submit" value="Mark as done" style="text-align: left;">
+                </form>
+            </p>
         </div>
     </div>
+    {% endif %}
     <hr>
+    <div class="container align-left">
+        <h2>Create Task</h2>
+        <form action="/tasks", method="post">
+            <div class="form-group">
+                <textarea name="paragraph_text" cols="100" rows="3" placeholder="Write a description" class="form-control"required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="category">Category</label>
+                <select name="category" id="category" class="form-control">
+                    {% for x in subjects %}
+                    <option value="{{x[0]}}">{{x[0].capitalize()}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="due_date">Due date</label>
+                <input type="date" id=due_date name=due_date class="form-control"required>
+            </div>
+            <input type="submit" class="button">
+        </form>
+    </div>
+    <hr>
+    <h2>Your Tasks</h2>
     <div class="container">
+        <form action="/reorder_tasks" method="post">
+            <div class="form-group">
+                <label for="order">Remove a Task</label>
+                <select id="order" name="order" class="form-control">
+                    <option value="0">Due Date</option>
+                    <option value="1">Set Date</option>
+                    <option value="2">Topic</option>
+                </select>
+            </div>
+            <input type="submit" value="Go" class="button">
+        </form>
         {% for task in list_of_tasks %}
-        <p>{{task}}</p>
+        <div class="container">
+            {{task}}
+        </div>
         {% endfor %}
     </div>
 </div>

@@ -1,4 +1,4 @@
-import classes, database, hashlib
+import classes, database, hashlib, json
 
 def initialise_timetable(timetable_data):
     timetable = classes.Timetable()
@@ -9,9 +9,21 @@ def initialise_timetable(timetable_data):
     return timetable
 
 def save_timetable(timetable_data, user):
-    print("success_1")
     database.insert_timetable(str(timetable_data), user)
+
+def initialise_revision(user):
+    data = eval(database.get_revision(user)[0])
+    with open ("./static/revision.json", "w") as outfile:
+        json.dump(data, outfile)
+    return data
+
+def save_revision(data, user):
+    database.insert_revision(data, user)
+    #database.insert_revision([{"Hello": "There"}, {"Goodbye": "Now"}], "H")
 
 def hash(string):
     x = hashlib.sha256(str.encode(string))
     return(x.hexdigest())
+
+def sort(list, comp_idx):
+    pass

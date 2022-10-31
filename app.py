@@ -1,7 +1,6 @@
-import re
 from flask import Flask, redirect, render_template, request, session
 from flask_session import Session
-import database, classes, datetime, functions
+import database, classes, datetime, functions, json
 app = Flask(__name__)
 
 app.config["SESSION_PERMANENT"] = False
@@ -27,6 +26,7 @@ def login():
         if name and password == functions.hash(request.form.get("password")):
             session["name"] = name
             session["timetable"] = functions.initialise_timetable(database.get_timetable(session["username"]))
+            session["revision_list_data"] = functions.initialise_revision(session["username"])
             return redirect("/")    
         else:
             message="Incorrect username or password"
@@ -71,32 +71,53 @@ def show_task(number):
             message = database.get_task_by_id(number)
         else:
             message = "Not your task"
-        return render_template("tasks.html", message=message)
+        return render_template("tasks.html", message=message, list_of_tasks = session.get("tasks"), subjects = database.get_subjects())
     if request.method == "POST":
         database.mark_as_done(number)
+        return redirect(f"/tasks/{number}")
+
+@app.route("/reorder_tasks", methods=["POST", "GET"])
+def reorder():
+    if not session.get("name"):
+        return redirect("/sign_in")
+    if request.method == "GET":
+        return redirect("/")
+    if request.method == "POST":
+        order_by = request.form.get("order")
+        if order_by == "0":
+            print("Due date")
+        elif order_by == "1":
+            print("Set date")
+        elif order_by == "2":
+            print("Topic")
+        print(session.get("tasks"))
         return redirect("/tasks")
-    
+
 @app.route("/revision", methods = ["POST", "GET"])
 def revision():
     if not session.get("name"):
         return redirect("/sign_in")
     if request.method == "GET":
-        print(session.get("revision_set_list"))
-        revision_set_names = []
-        for set in session.get("revision_set_list"):
-            revision_set_names.append(set.get_details())
-        print(revision_set_names)
-        return render_template("revision.html", revision_set_list = revision_set_names)
+        print(session.get("revision_list_data"))
+        revision = []
+        for x in session.get("revision_list_data"):
+            revision.append(x)
+        return render_template("revision.html", revision = revision)
     if request.method == "POST":
-        revision_id = request.form.get("revision_id")
-        return redirect(f"/revision/{revision_id}")
-
-@app.route("/revision/<int:revision_id>")
-def revision_notes():
-    if not session.get("name"):
-        return redirect("/sign_in")
-    if request.method == "GET":
-        return render_template("revision_task.html")
+        term = request.form.get("term")
+        definition = request.form.get("definition")
+        card_set = request.form.get("set_to_add_card")
+        new_cards = request.form.get("title")
+        if term and definition and card_set:
+            if not card_set:
+                card_set = next(iter(session.get("revision_list_data")))
+            session["revision_list_data"][card_set][term] = definition
+        elif new_cards:
+            session["revision_list_data"][new_cards] = {}
+        with open ("static/revision.json", "w") as outfile:
+            json.dump(session["revision_list_data"], outfile)
+        print(session.get("revision_list_data"))
+        return redirect("/revision")
 
 @app.route("/timetable", methods=["POST", "GET"])
 def timetable():
@@ -106,9 +127,17 @@ def timetable():
         week = session.get("timetable").display()
         return render_template("timetable.html", message = week, tasks = database.get_tasks_by_username(session["username"]), days = [x for x in session["timetable"].week] )
     if request.method == "POST":
-        session["timetable"].add_task_to_day(request.form.get("day"), request.form.get("task"))
+        day = request.form.get("day")
+        task = request.form.get("task")
+        remove = request.form.get("remove")
+        add = request.form.get("add")
+        if add:
+            session["timetable"].add_task_to_day(day, task)
+        if remove:
+            if session["timetable"].remove_task_from_day(day, task):
+                return redirect("/timetable")
         week = session.get("timetable").display()   
-        return redirect("/timetable")
+        return render_template("timetable.html", error = "Task not in day!", message=week, tasks = database.get_tasks_by_username(session["username"]), days = [x for x in session["timetable"].week])
 
 @app.route("/account")
 def account():
@@ -116,13 +145,19 @@ def account():
         return redirect("/sign_in")
     if request.method == "GET":
         username, first_name, last_name, email, password = database.get_user_details(session.get("username"))
-        return render_template("account.html", name=first_name, username = username, last_name = last_name, email = email, password = password)
+        number_of_tasks = len(database.get_tasks_by_username("H"))
+        revision_set_numer = len(session.get("revision_list_data"))
+        tasks_in_timetable = session.get("timetable").get_length()
+        return render_template("account.html", name=first_name, username = username, last_name = last_name, email = email, password = password, revision_set_numer=revision_set_numer, tasks_in_timetable = tasks_in_timetable, number_of_tasks = number_of_tasks)
 
 @app.route("/logout")
 def logout():
-    print(session["timetable"].get_timetable_data())
+    print(session["revision_list_data"])
     functions.save_timetable(session["timetable"].get_timetable_data(), session["username"])
+    functions.save_revision(session["revision_list_data"], session["username"])
     session["name"] = None
     session["username"] = None
+    session["revision_list_data"] = None
     session["timetable"] = None
+    session["tasks"] = None
     return redirect("/")
