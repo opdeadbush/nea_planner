@@ -19,11 +19,7 @@ def initialise_revision(user):
 
 def save_revision(data, user):
     database.insert_revision(data, user)
-    #database.insert_revision([{"Hello": "There"}, {"Goodbye": "Now"}], "H")
 
 def hash(string):
     x = hashlib.sha256(str.encode(string))
     return(x.hexdigest())
-
-def sort(list, comp_idx):
-    pass
