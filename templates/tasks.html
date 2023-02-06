@@ -72,11 +72,24 @@
             </div>
             <input type="submit" value="Go" class="button">
         </form>
-        {% for task in list_of_tasks %}
-        <div class="container">
-            {{task}}
-        </div>
-        {% endfor %}
+        <div class="row">
+            {% for task in list_of_tasks %}
+                <div class="col-6 col-lg-6 col-xl-4 mb-4 foo">
+                    <div class="card">
+                        <img class="card-top" src="{{task[8]}}" alt="{{subject}}">
+                        <div>
+                            <h1><a href="/tasks/{{task[0]}}">{{task[3]}}</a></h1>
+                            <hr>
+                            <p>{{task[1]}}</p>
+                            <hr>
+                            <p>Set: {{task[5]}}</p>
+                            <p>Due: {{task[4]}}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>  
+
     </div>
 </div>
 
