@@ -87,12 +87,11 @@ def reorder():
     if request.method == "POST":
         order_by = request.form.get("order")
         if order_by == "0":
-            print("Due date")
+            functions.merge_sort(4, session.get("tasks"))
         elif order_by == "1":
-            print("Set date")
+            functions.merge_sort(5, session.get("tasks"))
         elif order_by == "2":
-            print("Topic")
-        print(session.get("tasks"))
+            functions.merge_sort(3, session.get("tasks"))
         return redirect("/tasks")
 
 @app.route("/revision", methods = ["POST", "GET"])
@@ -154,7 +153,6 @@ def account():
 
 @app.route("/logout")
 def logout():
-    print(session["revision_list_data"])
     functions.save_timetable(session["timetable"].get_timetable_data(), session["username"])
     functions.save_revision(session["revision_list_data"], session["username"])
     session["name"] = None
